@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SEO Teknika Roof Calculator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .wrapper {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #map {
+        width: 100%;
+        height: 500px;
+        margin-bottom: 15px;
+      }
+      .calculation-box {
+        height: 75px;
+        width: 150px;
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        text-align: center;
+        color: red;
+      }
+
+      .mapboxgl-ctrl {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    </style>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+      type="text/css"
+    />
+    <div class="wrapper">
+      <div class="container" id="sectionOne">
+        <div id="geocoder" class="geocoder my-3 w-full"></div>
+        <div id="map"></div>
+        <button type="button" class="btn btn-primary" id="nextButton">
+          Show Prices
+        </button>
+      </div>
+      <div class="container card p-2 d-none" id="sectionTwo">
+        <div class="d-flex justify-content-between">
+          <form class="me-4">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Full Name</label
+              >
+              <input
+                type="name"
+                class="form-control"
+                id="name"
+                aria-describedby="name"
+              />
+              <div id="name" class="form-text">
+                We'll never share your email with anyone else.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <div
+            class="d-flex flex-wrap align-items-center justify-content-between"
+          >
+            <div class="card m-2" style="width: 18rem">
+              <img
+                src="https://images.unsplash.com/photo-1587061633437-187ac80e8e7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+            <div class="card m-2" style="width: 18rem">
+              <img
+                src="https://images.unsplash.com/photo-1587061633437-187ac80e8e7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            <div class="card m-2" style="width: 18rem">
+              <img
+                src="https://images.unsplash.com/photo-1587061633437-187ac80e8e7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div id="geocoder" class="geocoder my-3 w-full"></div> -->
+        <!-- <div id="map"></div> -->
+      </div>
+    </div>
+    <script>
+      const nextButton = document.querySelector("#nextButton");
+      const sectionOne = document.querySelector("#sectionOne");
+      const sectionTwo = document.querySelector("#sectionTwo");
+
+      nextButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const data = draw.getAll();
+        const area = turf.area(data);
+        if (area === 0) {
+          window.alert("Please draw your roof");
+        } else {
+          sectionOne.classList.add("d-none");
+          sectionTwo.classList.remove("d-none");
+        }
+      });
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibWVobWV0dGVtZWwiLCJhIjoiY2xkZm9uMHlkMGJjODNwbzF2ZGJtaXp4MiJ9.O-Op6Ze5ipuuB4WnwThFTQ";
+      const map = new mapboxgl.Map({
+        container: "map", // container ID
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: "mapbox://styles/mapbox/satellite-streets-v11", // style URL
+        center: [-91.874, 42.76], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+      });
+
+      const draw = new MapboxDraw({
+        displayControlsDefault: false,
+        // Select which mapbox-gl-draw control buttons to add to the map.
+        controls: {
+          polygon: true,
+          trash: true,
+        },
+        // Set mapbox-gl-draw to draw by default.
+        // The user does not have to click the polygon control button first.
+        defaultMode: "draw_polygon",
+      });
+      map.addControl(draw);
+
+      // Add the control to the map.
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+      });
+
+      document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+
+      // CALCULATE
+      document.getElementById("calculationButton").onclick = function () {
+        const data = draw.getAll();
+        if (data.features.length > 0) {
+          const area = turf.area(data);
+          // Restrict the area to 2 decimal points.
+          const rounded_area = Math.round(area * 100) / 100;
+          window.alert(rounded_area);
+        }
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
