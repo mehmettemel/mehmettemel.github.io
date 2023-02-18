@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>SEO Teknika Roof Calculator</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -17,42 +18,13 @@
       href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
   </head>
   <body>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      .wrapper {
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #map {
-        width: 100%;
-        height: 500px;
-        margin-bottom: 15px;
-      }
-      .calculation-box {
-        height: 75px;
-        width: 150px;
-        position: absolute;
-        bottom: 40px;
-        left: 10px;
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 15px;
-        text-align: center;
-        color: red;
-      }
-
-      .mapboxgl-ctrl {
-        width: 100% !important;
-        max-width: 100% !important;
-      }
-    </style>
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
@@ -67,14 +39,148 @@
       type="text/css"
     />
     <div class="wrapper">
+      <!-- SECTION ONE -->
       <div class="container" id="sectionOne">
         <div id="geocoder" class="geocoder my-3 w-full"></div>
-        <div id="map"></div>
-        <button type="button" class="btn btn-primary" id="nextButton">
-          Show Prices
-        </button>
+        <div id="map">
+          <div
+            class="d-flex flex-column position-absolute top-0 end-0 p-2"
+            style="z-index: 2"
+          >
+            <button
+              type="button"
+              class="btn btn-primary disabled"
+              id="deleteRoofButton"
+            >
+              Delete selected roof
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary mt-2"
+              id="drawRoofButton"
+            >
+              Draw a new roof
+            </button>
+          </div>
+          <div
+            id="info"
+            class="d-flex flex-column position-absolute bottom-0 start-0 my-4 mx-2"
+            style="z-index: 3"
+          >
+            <div class="alert alert-light" role="alert">
+              Draw your roof before select roof slopes
+            </div>
+          </div>
+        </div>
+        <div class="container-sm card p-2 shadow" id="sectionTwo">
+          <h6 class="mx-auto fw-bold">Select your roof slope</h2>
+            <button
+            type="button"
+            class="btn btn-primary mx-auto disabled"
+            id="showPricesButton"
+          >
+            Show Prices
+          </button>
+          <div class="container mt-5 mb-3">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="quiz_card_area">
+                  <input
+                    class="quiz_checkbox"
+                    type="checkbox"
+                    id="1"
+                    value="1"
+                  />
+                  <div class="single_quiz_card">
+                    <div class="quiz_card_content">
+                      <div class="quiz_card_icon">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                      </div>
+
+                      <div class="quiz_card_title">
+                        <h3>
+                          Flat <i class="fa fa-check" aria-hidden="true"></i>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="quiz_card_area">
+                  <input
+                    class="quiz_checkbox"
+                    type="checkbox"
+                    id="2"
+                    value="2"
+                  />
+                  <div class="single_quiz_card">
+                    <div class="quiz_card_content">
+                      <div class="quiz_card_icon">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                      </div>
+
+                      <div class="quiz_card_title">
+                        <h3>
+                          Shallow <i class="fa fa-check" aria-hidden="true"></i>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="quiz_card_area">
+                  <input
+                    class="quiz_checkbox"
+                    type="checkbox"
+                    id="3"
+                    value="3"
+                  />
+                  <div class="single_quiz_card">
+                    <div class="quiz_card_content">
+                      <div class="quiz_card_icon">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                      </div>
+                      <div class="quiz_card_title">
+                        <h3>
+                          Medium <i class="fa fa-check" aria-hidden="true"></i>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="quiz_card_area">
+                  <input
+                    class="quiz_checkbox"
+                    type="checkbox"
+                    id="4"
+                    value="4"
+                  />
+                  <div class="single_quiz_card">
+                    <div class="quiz_card_content">
+                      <div class="quiz_card_icon">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                      </div>
+
+                      <div class="quiz_card_title">
+                        <h3>
+                          Steep <i class="fa fa-check" aria-hidden="true"></i>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
       </div>
-      <div class="container card p-2 d-none" id="sectionTwo">
+      <!-- SECTION THREE -->
+      <div class="container card p-2 d-none" id="sectionThree">
         <div class="d-flex justify-content-between">
           <form class="me-4">
             <div class="mb-3">
@@ -155,68 +261,25 @@
             </div>
           </div>
         </div>
-        <!-- <div id="geocoder" class="geocoder my-3 w-full"></div> -->
-        <!-- <div id="map"></div> -->
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <button
+          type="button"
+          class="btn btn-danger d-none mx-2"
+          id="backButton"
+        >
+          Back
+        </button>
+        <!-- <button
+          type="button"
+          class="btn btn-primary mx-2 disabled"
+          id="showPricesButton"
+        >
+          Show Prices
+        </button> -->
       </div>
     </div>
-    <script>
-      const nextButton = document.querySelector("#nextButton");
-      const sectionOne = document.querySelector("#sectionOne");
-      const sectionTwo = document.querySelector("#sectionTwo");
-
-      nextButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        const data = draw.getAll();
-        const area = turf.area(data);
-        if (area === 0) {
-          window.alert("Please draw your roof");
-        } else {
-          sectionOne.classList.add("d-none");
-          sectionTwo.classList.remove("d-none");
-        }
-      });
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoibWVobWV0dGVtZWwiLCJhIjoiY2xkZm9uMHlkMGJjODNwbzF2ZGJtaXp4MiJ9.O-Op6Ze5ipuuB4WnwThFTQ";
-      const map = new mapboxgl.Map({
-        container: "map", // container ID
-        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-        style: "mapbox://styles/mapbox/satellite-streets-v11", // style URL
-        center: [-91.874, 42.76], // starting position [lng, lat]
-        zoom: 12, // starting zoom
-      });
-
-      const draw = new MapboxDraw({
-        displayControlsDefault: false,
-        // Select which mapbox-gl-draw control buttons to add to the map.
-        controls: {
-          polygon: true,
-          trash: true,
-        },
-        // Set mapbox-gl-draw to draw by default.
-        // The user does not have to click the polygon control button first.
-        defaultMode: "draw_polygon",
-      });
-      map.addControl(draw);
-
-      // Add the control to the map.
-      const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl,
-      });
-
-      document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
-
-      // CALCULATE
-      document.getElementById("calculationButton").onclick = function () {
-        const data = draw.getAll();
-        if (data.features.length > 0) {
-          const area = turf.area(data);
-          // Restrict the area to 2 decimal points.
-          const rounded_area = Math.round(area * 100) / 100;
-          window.alert(rounded_area);
-        }
-      };
-    </script>
+    <script type="text/javascript" src="index.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
