@@ -40,8 +40,8 @@ map.on("draw.delete", function (e) {
 });
 
 map.on("draw.selectionchange", function (e) {
-  const data = draw.getAll();
-  checkDeleteButton(data.features);
+  const allDrawn = draw.getAll();
+  checkDeleteButton(allDrawn.features);
   console.log("draw.selectionchange", e.features);
 });
 
@@ -65,6 +65,7 @@ const checkDeleteButton = (features) => {
 };
 
 checkShowPricesButton = (roofLength) => {
+  console.warn(roofLength);
   if (roofLength.length > 0 && checkCheckBoxesIsChecked()) {
     showPricesButton.classList.remove("disabled");
   } else {
@@ -91,15 +92,18 @@ deleteRoofButton.addEventListener("click", () => {
   } else {
     window.alert("Please select a roof before delete");
   }
-
-  const allRoofs = draw.getAll();
-  if (allRoofs.features.length > 0) {
+  const prevMode = draw.getMode();
+  draw.changeMode("simple_select");
+  const allDrawn = draw.getAll();
+  if (allDrawn.features.length > 0) {
     draw.changeMode(draw.modes.SIMPLE_SELECT);
-    checkShowPricesButton(allRoofs.features);
+    checkShowPricesButton(allDrawn.features);
+    draw.changeMode(prevMode);
   } else {
     draw.changeMode(draw.modes.DRAW_POLYGON);
-    checkDeleteButton(allRoofs.features.length);
+    checkDeleteButton(allDrawn.features.length);
     checkShowPricesButton([]);
+    draw.changeMode(prevMode);
   }
 });
 
@@ -124,8 +128,13 @@ showPricesButton.addEventListener("click", (event) => {
 
 allCheckBoxes.forEach((checkbox) =>
   checkbox.addEventListener("change", (event) => {
+    const prevMode = draw.getMode();
+    draw.changeMode("simple_select");
+    const allDrawn = draw.getAll();
+    console.warn(allDrawn.features);
+    checkDeleteButton(allDrawn.features);
+    checkShowPricesButton(allDrawn.features);
     checkCheckBoxesIsChecked();
-    const data = draw.getAll();
-    checkDeleteButton(data.features);
+    draw.changeMode(prevMode);
   })
 );
