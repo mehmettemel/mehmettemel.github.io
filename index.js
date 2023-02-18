@@ -65,7 +65,6 @@ const checkDeleteButton = (features) => {
 };
 
 checkShowPricesButton = (roofLength) => {
-  console.warn(roofLength);
   if (roofLength.length > 0 && checkCheckBoxesIsChecked()) {
     showPricesButton.classList.remove("disabled");
   } else {
@@ -90,7 +89,7 @@ deleteRoofButton.addEventListener("click", () => {
   if (selectedRoof.features.length) {
     draw.delete(selectedRoof.features[0].id);
   } else {
-    window.alert("Please select a roof before delete");
+    openModal("Please select a roof before delete");
   }
   const prevMode = draw.getMode();
   draw.changeMode("simple_select");
@@ -131,10 +130,32 @@ allCheckBoxes.forEach((checkbox) =>
     const prevMode = draw.getMode();
     draw.changeMode("simple_select");
     const allDrawn = draw.getAll();
-    console.warn(allDrawn.features);
     checkDeleteButton(allDrawn.features);
     checkShowPricesButton(allDrawn.features);
     checkCheckBoxesIsChecked();
     draw.changeMode(prevMode);
   })
 );
+
+//MODAL EVENTS
+function openModal(alertMessage) {
+  document.getElementById("backdrop").style.display = "block";
+  document.getElementById("modal").style.display = "block";
+  document.getElementById("modal").classList.add("show");
+  document.querySelector(".modal-body").innerHTML += `<p>${alertMessage}</p>`;
+}
+function closeModal() {
+  document.getElementById("backdrop").style.display = "none";
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("modal").classList.remove("show");
+  document.querySelector(".modal-body").innerHTML = "";
+}
+// Get the modal
+var modal = document.getElementById("modal");
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    closeModal();
+  }
+};
