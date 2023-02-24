@@ -40,7 +40,7 @@
     />
     <div class="wrapper">
       <!-- SECTION ONE -->
-      <div class="container" id="sectionOne">
+      <div class="container d-none" id="sectionOne">
         <div id="geocoder" class="geocoder my-3 w-full"></div>
         <div id="map">
           <div
@@ -49,14 +49,14 @@
           >
             <button
               type="button"
-              class="btn btn-primary disabled"
+              class="btn btn-sm btn-primary disabled"
               id="deleteRoofButton"
             >
               Delete selected roof
             </button>
             <button
               type="button"
-              class="btn btn-primary mt-2"
+              class="btn btn-sm btn-primary mt-2"
               id="drawRoofButton"
             >
               Draw a new roof
@@ -74,13 +74,7 @@
         </div>
         <div class="container-sm card p-2 shadow" id="sectionTwo">
           <h6 class="mx-auto fw-bold">Select your roof slope</h2>
-            <button
-            type="button"
-            class="btn btn-primary mx-auto disabled"
-            id="showPricesButton"
-          >
-            Show Prices
-          </button>
+      
           <div class="container mt-5 mb-3">
             <div class="row">
               <div class="col-sm-3">
@@ -174,18 +168,25 @@
                   </div>
                 </div>
               </div>
+              <button
+              type="button"
+              class="btn btn-primary mx-auto disabled fw-bold"
+              id="showPricesButton"
+            >
+              SHOW PRICES
+            </button>
             </div>
           </div>
         
         </div>
       </div>
       <!-- SECTION THREE -->
-      <div class="container card p-2 d-none" id="sectionThree">
-        <div class="d-flex justify-content-between">
-          <form class="me-4">
+      <div class="container card p-2 shadow" id="sectionThree">
+        <div class="d-flex justify-content-between p-4">
+          <form class="me-4" id="form">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label"
-                >Full Name</label
+                >Full Name *</label
               >
               <input
                 type="name"
@@ -193,20 +194,29 @@
                 id="name"
                 aria-describedby="name"
               />
-              <div id="name" class="form-text">
-                We'll never share your email with anyone else.
-              </div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label"
-                >Email address</label
+                >Email address *</label
               >
               <input
                 type="email"
                 class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
+                id="email"
+                aria-describedby="email"
               />
+           
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Phone Number *</label
+              >
+              <input
+              type="phone"
+              class="form-control"
+              id="phone"
+              aria-describedby="phone"
+            />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -300,6 +310,7 @@
 </div>
 <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
     <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="mapbox.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
