@@ -1,4 +1,5 @@
 const showPricesButton = document.querySelector("#showPricesButton");
+const newCalculationButton = document.querySelector("#newCalculationButton");
 const showSlopesButton = document.querySelector("#showSlopesButton");
 const backButton = document.querySelector("#backButton");
 const sectionOne = document.querySelector("#sectionOne");
@@ -70,11 +71,12 @@ drawRoofButton.addEventListener("click", () => {
   draw.changeMode(draw.modes.DRAW_POLYGON);
 });
 
+//SECTION ONE
 showPricesButton.addEventListener("click", (event) => {
   sectionOne.classList.add("d-none");
+  sectionThree.classList.remove("d-none");
   event.preventDefault();
   const data = draw.getAll();
-
   //   const area = turf.area(data);
   //   const rounded_area = Math.round(area * 100) / 100;
   //   if (area === 0) {
@@ -96,6 +98,23 @@ allCheckBoxes.forEach((checkbox) =>
     draw.changeMode(prevMode);
   })
 );
+
+//SECTION TWO
+newCalculationButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  sectionThree.classList.add("d-none");
+  sectionOne.classList.remove("d-none");
+
+  draw.deleteAll();
+
+  allCheckBoxes.forEach((checkbox) => (checkbox.checked = false));
+
+  const allDrawn = draw.getAll();
+  checkDeleteButton(allDrawn.features);
+  checkShowPricesButton(allDrawn.features);
+  checkCheckBoxesIsChecked();
+  draw.changeMode("simple_select");
+});
 
 //MODAL EVENTS
 function openModal(alertMessage) {
