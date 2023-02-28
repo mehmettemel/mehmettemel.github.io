@@ -5,13 +5,17 @@ const map = new mapboxgl.Map({
   // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
   style: "mapbox://styles/mapbox/satellite-streets-v11", // style URL
   center: [-105.063721, 39.83559], // starting position [lng, lat]
-  zoom: 18, // starting zoom
+  zoom: 19, // starting zoom
 });
 
 const geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl: mapboxgl,
   countries: "us",
+  placeholder: "Example:1589 17th Ave NW, New Brighton, MN 55112, USA",
+  marker: false,
+  zoom: 19,
+  flyTo: { duration: 0 },
 });
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
